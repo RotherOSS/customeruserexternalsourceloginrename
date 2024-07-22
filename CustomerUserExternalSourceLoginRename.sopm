@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otobo_package version="1.0">
+    <Name>CustomerUserExternalSourceLoginRename</Name>
+    <Version>0.0.0</Version>
+    <Framework>10.0.x</Framework>
+    <Vendor>Rother OSS GmbH</Vendor>
+    <URL>https://otobo.io/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</License>
+    <Description Lang="en">Loop over Customer Users and rename the user logins.</Description>
+    <Filelist>
+        <File Permission="660" Location="Kernel/System/Console/Command/Admin/CustomerUser/ExternalSourceLoginRename.pm" />
+        <File Permission="660" Location="doc/content/index.rst" />
+    </Filelist>
+</otobo_package>
