@@ -58,6 +58,13 @@ END_DESCRIPTION
         ValueRegex  => qr/^\S{3,}$/smx,
     );
     $Self->AddOption(
+        Name        => 'use-batches',
+        Description => 'search in batches - i.e. instead of Filter="*" search for "a*"-"9*" (1), or "aa*"-"99*" (2), and so forth',
+        Required    => 0,
+        HasValue    => 1,
+        ValueRegex  => qr/^\d$/smx,
+    );
+    $Self->AddOption(
         Name        => 'dry-run',
         Description => 'only print out the renamings and problematic cases',
         Required    => 0,
@@ -100,12 +107,34 @@ sub Run {
     }
 
     # first collect the mapping, using a high search limit per default
-    my $Limit            = $Self->GetOption('limit') || 100_000_000;
-    my %CustomerUserList = $CustomerUserObject->CustomerSearch(
-        Search => '*',      # no restriction, but passing a restriction is required
-        Valid  => 0,        # valid and invalid IDs
-        Limit  => $Limit,
-    );
+    my $Limit         = $Self->GetOption('limit') || 100_000_000;
+    my $BatchDepth    = $Self->GetOption('use-batches');
+    my @SearchBatches = ('');
+
+    if ( $BatchDepth ) {
+        # build "aa", "ab", ..., "3x", "3y", ..., "99"; in desired depth
+        while ( $BatchDepth-- > 0 ) {
+            my @NextDepth;
+            for my $Prefix ( @SearchBatches ) {
+                for my $Char ( 'a'..'z', 0..9 ) {
+                    push @NextDepth, $Prefix.$Char;
+                }
+            }
+            @SearchBatches = @NextDepth;
+        }
+    }
+
+    my %CustomerUserList;
+    for my $Prefix ( @SearchBatches ) {
+        my %SearchResult = $CustomerUserObject->CustomerSearch(
+            Search => $Prefix . '*',
+            Valid  => 0,
+            Limit  => $Limit,
+        );
+
+        %CustomerUserList = ( %CustomerUserList, %SearchResult );
+    }
+
     my $NumCustomerUsers = keys %CustomerUserList;
     $Self->Print("Found $NumCustomerUsers customer users\n");
 
