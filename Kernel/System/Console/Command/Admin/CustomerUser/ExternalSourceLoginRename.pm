@@ -2,7 +2,7 @@
 # OTOBO is a web-based ticketing system for service organisations.
 # --
 # Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
-# Copyright (C) 2019-2024 Rother OSS GmbH, https://otobo.io/
+# Copyright (C) 2019-2026 Rother OSS GmbH, https://otobo.io/
 # --
 # This program is free software: you can redistribute it and/or modify it under
 # the terms of the GNU General Public License as published by the Free Software
@@ -111,13 +111,14 @@ sub Run {
     my $BatchDepth    = $Self->GetOption('use-batches');
     my @SearchBatches = ('');
 
-    if ( $BatchDepth ) {
+    if ($BatchDepth) {
+
         # build "aa", "ab", ..., "3x", "3y", ..., "99"; in desired depth
         while ( $BatchDepth-- > 0 ) {
             my @NextDepth;
-            for my $Prefix ( @SearchBatches ) {
-                for my $Char ( 'a'..'z', 0..9 ) {
-                    push @NextDepth, $Prefix.$Char;
+            for my $Prefix (@SearchBatches) {
+                for my $Char ( 'a' .. 'z', 0 .. 9 ) {
+                    push @NextDepth, $Prefix . $Char;
                 }
             }
             @SearchBatches = @NextDepth;
@@ -125,7 +126,7 @@ sub Run {
     }
 
     my %CustomerUserList;
-    for my $Prefix ( @SearchBatches ) {
+    for my $Prefix (@SearchBatches) {
         my %SearchResult = $CustomerUserObject->CustomerSearch(
             Search => $Prefix . '*',
             Valid  => 0,
