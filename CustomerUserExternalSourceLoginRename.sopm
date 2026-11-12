@@ -6,7 +6,8 @@
     <Vendor>Rother OSS GmbH</Vendor>
     <URL>https://otobo.io/</URL>
     <License>GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</License>
-    <Description Lang="en">Loop over Customer Users and rename the user logins.</Description>
+    <Description Lang="en">Loops over customer users and rename the user logins.</Description>
+    <Description Lang="hu">Végiglépked az ügyfél-felhasználókon, és átnevezi a felhasználói bejelentkezési neveket.</Description>
     <Filelist>
         <File Permission="660" Location="Kernel/System/Console/Command/Admin/CustomerUser/ExternalSourceLoginRename.pm" />
         <File Permission="660" Location="doc/content/index.rst" />
