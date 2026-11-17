@@ -24,7 +24,7 @@ System requirements
 
 Framework
 ---------
-OTOBO 10.0.x
+OTOBO 10.1.x
 
 Packages
 --------
@@ -51,8 +51,8 @@ About
 Contact
 -------
 | Rother OSS GmbH
-| Email: hello@otobo.de
-| Web: https://otobo.de
+| Email: hello@otobo.io
+| Web: https://otobo.io
 
 Version
 -------
